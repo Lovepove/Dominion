@@ -1,5 +1,7 @@
 package dominion;
 
-public class IPlayable {
-
+public interface IPlayable {
+	
+	public void play(); 
+		
 }
