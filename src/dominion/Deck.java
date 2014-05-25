@@ -1,36 +1,40 @@
 package dominion;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Deck {
-	private ArrayList<Card> deck;
+	private Stack<Card> deck;
 	private ArrayList<Card> graveyard;
 	private ArrayList<Card> activeCards;
 
 	
 	public Deck() {
 		graveyard = new ArrayList<Card>();
-		deck = new ArrayList<Card>();
+		deck = new Stack<Card>();
 		activeCards = new ArrayList<Card>();
 	}
 	
 	public void shuffle() {
 		for (Card c : graveyard) {
-			deck.add(c);
+			deck.push(c);
+			System.out.println("added card to graveyard");
 		}
 		graveyard.clear();
-		for (int i = 0; i < deck.size(); i++) {
-			
-		}
-		
+		System.out.println("Graveyard cleared");
+
 	}
 	
 	public Card draw() {
-		return null;
+		return deck.pop();
 	}
 	
 	public void add(Card card) {
+		graveyard.add(card);
 		
 	}
-
+	
+	public int size() {
+		return deck.size();
+	}
 }
