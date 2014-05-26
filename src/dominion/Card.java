@@ -7,11 +7,14 @@ public class Card {
 	public Card (String displayName, Player activePlayer) {
 		this.displayName = displayName;
 		this.activePlayer = activePlayer;
-		
 	}
 
 	public String display() {
 		return displayName;
+	}
+	
+	public Player getPlayer() {
+		return activePlayer;
 	}
 
 }

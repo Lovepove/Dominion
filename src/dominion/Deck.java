@@ -18,10 +18,10 @@ public class Deck {
 	public void shuffle() {
 		for (Card c : graveyard) {
 			deck.push(c);
-			System.out.println("added card to graveyard");
+//			System.out.println("added card to graveyard");
 		}
 		graveyard.clear();
-		System.out.println("Graveyard cleared");
+//		System.out.println("Graveyard cleared");
 
 	}
 	

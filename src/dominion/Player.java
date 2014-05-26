@@ -18,9 +18,9 @@ public class Player {
 	
 	public void testing() {		
 		ActionCard smithy1 = new CardSmithy(this);
-		Card smithy2 = new CardSmithy(this);
-		Card smithy3 = new CardSmithy(this);
-		Card smithy4 = new CardSmithy(this);
+		ActionCard smithy2 = new CardSmithy(this);
+		ActionCard smithy3 = new CardSmithy(this);
+		ActionCard smithy4 = new CardSmithy(this);
 		deck.add(smithy1);
 		deck.add(smithy2);
 		deck.add(smithy3);
@@ -30,12 +30,16 @@ public class Player {
 		hand.add(tempCard);
 		ActionCard tempActionCard = (ActionCard) hand.get(0);
 		tempActionCard.play();
-		
+//		System.out.println(hand.size());
 	}
 	
 	public void getHand() {
 		for (Card c : hand) {
 			System.out.println(c.display());
 		}
+	}
+	
+	public void drawCard() {
+		
 	}
 }

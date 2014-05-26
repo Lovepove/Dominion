@@ -1,11 +1,12 @@
 package dominion;
 
 public class CardSmithy extends ActionCard implements IAction  {
-	Player activePlayer;
+	private Player activePlayer;
 	
 	
-	public CardSmithy(Player player) {
-		super(new String("Smithy"), player);
+	public CardSmithy(Player activePlayer) {
+		super("Smithy", activePlayer);
+		this.activePlayer = activePlayer;
 	}
 
 	@Override
