@@ -1,6 +1,6 @@
 package dominion;
 
-public class CardSmithy extends ActionCard implements IAction  {
+public class CardSmithy extends ActionCard {
 	private Player activePlayer;
 	
 	
@@ -11,9 +11,9 @@ public class CardSmithy extends ActionCard implements IAction  {
 
 	@Override
 	public void play() {
-		activePlayer.getDeck().draw();
-		activePlayer.getDeck().draw();
-		activePlayer.getDeck().draw();
+		activePlayer.drawCard();
+		activePlayer.drawCard();
+		activePlayer.drawCard();
 	}
 	
 	public String getName() {

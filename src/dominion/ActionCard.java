@@ -13,5 +13,5 @@ public class ActionCard extends Card {
 	public void play() {
 		
 	}
-
+	
 }
