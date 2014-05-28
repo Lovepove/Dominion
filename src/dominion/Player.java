@@ -22,16 +22,30 @@ public class Player {
 		graveyard = new Stack<Card>();
 	}
 	
-	public void addAction() {
-		actions++;
+	public void addAction(int actionsIncrease) {
+		actions = actionsIncrease + actions;
 	}
 	
-	public void addBuy() {
-		buys++;
+	public void addBuy(int buysIncrease) {
+		buys = buysIncrease + buys;
 	}
 	
-	public void addGold(int i) {
-		gold = gold + i;
+	public void addGold(int goldIncrease) {
+		gold = goldIncrease + gold;
+	}
+	
+	public void drawCard(int cards) {
+		if (deck.size() == 0) {
+			shuffleDeck();
+		}
+		if (deck.size() != 0) {
+			for (int i = 0; i < cards; i++) {
+				Card drawnCard = deck.pop();
+				hand.add(drawnCard);
+			}
+		} else {
+			System.out.println("Leken är tom!");
+		}
 	}
 	
 	public void shuffleDeck() {
@@ -50,6 +64,24 @@ public class Player {
 	public void add(Card card) {
 		graveyard.push(card);	
 	}
+	
+	// Tror inte jag kommer behöva dessa men vi får se
+	public int getAction() {
+		return actions;
+	}
+	
+	public int getBuy() {
+		return buys;
+	}
+	
+	public int getGold() {
+		return gold;
+	}
+	
+	public void getGold(int goldIncrease) {
+		gold = goldIncrease + gold;
+	}
+
 	
 	public void getHand() {
 		int i = 0;
@@ -72,24 +104,8 @@ public class Player {
 			System.out.println(c.display());
 		}
 	}
-	
-	public void drawCard() {
-		if (deck.size() == 0) {
-			shuffleDeck();
-		}
-		if (deck.size() != 0) {
-			Card drawnCard = deck.pop();
-			hand.add(drawnCard);
-		} else {
-			System.out.println("Leken är tom!");
-		}
 
-	}
-	
 	public void play(int i) {
-		if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
-			
-		}
 		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions != 0) {
 			ActionCard tempCard = (ActionCard) hand.get(i);
 			tempCard.play();
@@ -98,24 +114,30 @@ public class Player {
 			actions--;
 		}
 
-		if (VictoryCard.class.isAssignableFrom(hand.get(i).getClass())) {
-			
-		}		
+//		if (VictoryCard.class.isAssignableFrom(hand.get(i).getClass())) {
+//			
+//		}	
+//		if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
+//			
+//		}
 	}
 	
 	public void testing() {		
-		ActionCard smithy1 = new CardSmithy(this);
-		ActionCard smithy2 = new CardSmithy(this);
-		ActionCard smithy3 = new CardSmithy(this);
-		ActionCard smithy4 = new CardSmithy(this);
-		add(smithy1);
-		add(smithy2);
-		add(smithy3);
-		add(smithy4);
-		addAction();
-		drawCard();
+		ActionCard card1 = new CardMarket(this);
+		ActionCard card2 = new CardMarket(this);
+		add(card1);
+		add(card2);
+		addAction(1);
+		drawCard(1);
+		getHand();
 		play(0);
 		getHand();
+	}
+	
+	private void startGame() {
+		for (int i = 0; i < 7; i++) {
+			
+		}
 	}
 	
 	private void startRound() {
@@ -123,7 +145,7 @@ public class Player {
 		buys = 1;
 		gold = 0;
 		while (hand.size() > 5) {
-			drawCard();
+			drawCard(1);
 		}
 	}
 	

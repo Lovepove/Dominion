@@ -7,5 +7,9 @@ public class TreasureCard extends Card {
 		super(displayName, activePlayer);
 		this.activePlayer = activePlayer;
 	}
+	
+	public void play() {
+		
+	}
 
 }

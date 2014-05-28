@@ -11,9 +11,7 @@ public class CardSmithy extends ActionCard {
 
 	@Override
 	public void play() {
-		activePlayer.drawCard();
-		activePlayer.drawCard();
-		activePlayer.drawCard();
+		activePlayer.drawCard(3);
 	}
 	
 	public String getName() {

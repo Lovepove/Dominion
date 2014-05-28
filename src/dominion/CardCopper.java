@@ -9,6 +9,7 @@ public class CardCopper extends TreasureCard {
 		
 	}
 	
-	
-
+	public void play() {
+		activePlayer.addGold(1);
+	}
 }
