@@ -112,19 +112,18 @@ public class Player {
 			hand.remove(i);
 			activeCards.add(tempCard);
 			actions--;
-		}
+		} else if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
+			TreasureCard tempCard = (TreasureCard) hand.get(i);
+			tempCard.play();
+			hand.remove(i);
+			activeCards.add(tempCard);			
+		}	
 
-//		if (VictoryCard.class.isAssignableFrom(hand.get(i).getClass())) {
-//			
-//		}	
-//		if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
-//			
-//		}
 	}
 	
 	public void testing() {		
-		ActionCard card1 = new CardMarket(this);
-		ActionCard card2 = new CardMarket(this);
+		ActionCard card1 = new CardWoodcutter(this);
+		ActionCard card2 = new CardWoodcutter(this);
 		add(card1);
 		add(card2);
 		addAction(1);
