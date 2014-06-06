@@ -14,6 +14,7 @@ public class Player {
 	private int buys;
 	private int gold;
 	private int victoryPoints;
+	private GameState gameState;
 
 	public Player() {
 		hand = new ArrayList<Card>();
@@ -104,6 +105,10 @@ public class Player {
 			System.out.println(c.display());
 		}
 	}
+	
+	public void gainCard(int i) {
+		
+	}
 
 	public void play(int i) {
 		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions != 0) {
@@ -117,20 +122,17 @@ public class Player {
 			tempCard.play();
 			hand.remove(i);
 			activeCards.add(tempCard);			
-		}	
-
+		}
 	}
 	
-	public void testing() {		
-		ActionCard card1 = new CardWoodcutter(this);
-		ActionCard card2 = new CardWoodcutter(this);
-		add(card1);
-		add(card2);
-		addAction(1);
+	public void testing() {
+		gainCard(0);
 		drawCard(1);
 		getHand();
-		play(0);
-		getHand();
+	}
+	
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 	
 	private void startGame() {
