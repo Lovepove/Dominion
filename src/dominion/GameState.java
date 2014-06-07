@@ -35,10 +35,18 @@ public class GameState {
 		getActionCards();
 	}
 	
-
-	
 	public Card gainActionCard(int i) {
-		return null;
+		Card tempCard = actionCardIndex[i - 1];
+		if (actionCards.contains(tempCard)) {
+			actionCards.remove(tempCard);
+			return tempCard;
+		} else {
+			return null;
+		}
+	}
+	
+	public Card getActionCard(int i) {
+		return actionCardIndex[i - 1];
 	}
 	
 	public void getActionCards() {

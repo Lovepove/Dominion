@@ -79,11 +79,6 @@ public class Player {
 		return gold;
 	}
 	
-	public void getGold(int goldIncrease) {
-		gold = goldIncrease + gold;
-	}
-
-	
 	public void getHand() {
 		int i = 0;
 		for (Card c : hand) {
@@ -107,11 +102,21 @@ public class Player {
 	}
 	
 	public void gainCard(int i) {
-		
+		Card tempCard = gameState.gainActionCard(i);
+		add(tempCard);
+	}
+	
+	public void buyCard(int i) {
+		Card tempCard = gameState.getActionCard(i);
+		if (tempCard.getCost() <= gold && buys > 0) {
+			gainCard(i);
+			buys--;
+			gold = gold - tempCard.getCost();
+		} 
 	}
 
 	public void play(int i) {
-		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions != 0) {
+		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions > 0) {
 			ActionCard tempCard = (ActionCard) hand.get(i);
 			tempCard.play();
 			hand.remove(i);
@@ -126,7 +131,11 @@ public class Player {
 	}
 	
 	public void testing() {
-		gainCard(0);
+		addBuy(1);
+		addGold(3);
+		System.out.println(getGold());
+		buyCard(1);
+		System.out.println(getGold());
 		drawCard(1);
 		getHand();
 	}

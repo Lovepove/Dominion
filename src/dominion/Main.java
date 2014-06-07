@@ -6,8 +6,9 @@ public class Main {
 		Player player = new Player();
 		GameState gameState = new GameState(player);
 		player.setGameState(gameState);
-		gameState.testing();
-//		player.testing();	
+//		gameState.testing();
+		player.testing();
+//		gameState.testing();
 	}
 
 }
