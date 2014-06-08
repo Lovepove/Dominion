@@ -4,8 +4,6 @@ public class CardSmithy extends ActionCard {
 	private Player activePlayer;
 	private int cost;
 
-	
-	
 	public CardSmithy(Player activePlayer) {
 		super("Smithy", activePlayer);
 		this.activePlayer = activePlayer;

@@ -130,23 +130,25 @@ public class Player {
 		}
 	}
 	
-	public void testing() {
-		addBuy(1);
-		addGold(3);
-		System.out.println(getGold());
-		buyCard(1);
-		System.out.println(getGold());
-		drawCard(1);
-		getHand();
-	}
-	
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
 	}
 	
+	public void testing() {
+		startGame();
+	}
+	
 	private void startGame() {
 		for (int i = 0; i < 7; i++) {
-			
+			Card tempCard = new CardCopper(this);
+			add(tempCard);
+		}
+		for (int i = 0; i < 3; i++) {
+			Card tempCard = new CardEstate(this);
+			add(tempCard);
+		}
+		while (hand.size() < 5) {
+			drawCard(1);
 		}
 	}
 	
@@ -154,14 +156,23 @@ public class Player {
 		actions = 1;
 		buys = 1;
 		gold = 0;
+
+	}
+	
+	private void endRound() {
+		discardHand();
+		for (Card c : activeCards) {
+			graveyard.push(c);
+		}
 		while (hand.size() > 5) {
 			drawCard(1);
 		}
 	}
 	
-	private void endRound() {
-		for (Card c : activeCards) {
+	private void discardHand() {
+		for (Card c : hand) {
 			graveyard.push(c);
 		}
+		hand.clear();
 	}
 }

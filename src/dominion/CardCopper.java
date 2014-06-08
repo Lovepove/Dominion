@@ -4,8 +4,8 @@ public class CardCopper extends TreasureCard {
 	private Player activePlayer;
 	private int cost;
 
-	public CardCopper(String displayName, Player activePlayer) {
-		super(displayName, activePlayer);	
+	public CardCopper(Player activePlayer) {
+		super("Copper", activePlayer);	
 		this.activePlayer = activePlayer;
 		cost = 0;
 		
@@ -13,6 +13,10 @@ public class CardCopper extends TreasureCard {
 	
 	public void play() {
 		activePlayer.addGold(1);
+	}
+	
+	public String getName() {
+		return new String("Copper");
 	}
 	
 	public int getCost() {
