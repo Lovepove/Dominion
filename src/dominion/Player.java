@@ -101,18 +101,55 @@ public class Player {
 		}
 	}
 	
-	public void gainCard(int i) {
+	private void gainActionCard(int i) {
 		Card tempCard = gameState.gainActionCard(i);
 		add(tempCard);
 	}
 	
-	public void buyCard(int i) {
+	private void gainVictoryCard(int i) {
+		Card tempCard = gameState.gainVictoryCard(i);
+		add(tempCard);
+	}
+	
+	private void gainTreasureCard(int i) {
+		Card tempCard = gameState.gainTreasureCard(i);
+		add(tempCard);
+	}
+	
+	public boolean buyActionCard(int i) {
 		Card tempCard = gameState.getActionCard(i);
 		if (tempCard.getCost() <= gold && buys > 0) {
-			gainCard(i);
+			gainActionCard(i);
 			buys--;
 			gold = gold - tempCard.getCost();
-		} 
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean buyVictoryCard(int i) {
+		Card tempCard = gameState.getVictoryCard(i);
+		if (tempCard.getCost() <= gold && buys > 0) {
+			gainVictoryCard(i);
+			buys--;
+			gold = gold - tempCard.getCost();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean buyTreasureCard(int i) {
+		Card tempCard = gameState.getTreasureCard(i);
+		if (tempCard.getCost() <= gold && buys > 0) {
+			gainTreasureCard(i);
+			buys--;
+			gold = gold - tempCard.getCost();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public void play(int i) {
@@ -130,6 +167,15 @@ public class Player {
 		}
 	}
 	
+	public void playAllTreasureCards() {
+		for (Card c : hand) {
+			if (TreasureCard.class.isAssignableFrom(c.getClass())) {
+				TreasureCard tc = (TreasureCard) c;
+				tc.play();
+			}
+		}
+	}
+	
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -138,7 +184,7 @@ public class Player {
 		startGame();
 	}
 	
-	private void startGame() {
+	public void startGame() {
 		for (int i = 0; i < 7; i++) {
 			Card tempCard = new CardCopper(this);
 			add(tempCard);
@@ -152,14 +198,13 @@ public class Player {
 		}
 	}
 	
-	private void startRound() {
+	public void startRound() {
 		actions = 1;
 		buys = 1;
 		gold = 0;
-
 	}
 	
-	private void endRound() {
+	public void endRound() {
 		discardHand();
 		for (Card c : activeCards) {
 			graveyard.push(c);
