@@ -11,6 +11,7 @@ public class GameManager {
 	public GameManager () {
 		player = new Player();
 		gameState = new GameState(player);
+		player.setGameState(gameState);
 	}
 	
 	public void startGame() {
@@ -27,10 +28,15 @@ public class GameManager {
 					player.getHand();
 				} else if (selection == 2) {
 					player.getHand();
+					System.out.println("#" + (player.getHandSize() + 1) + " Go Back");
 					System.out.println("Which card would you like to play?");
 					selection = keyboard.nextInt();
 					//Måste kolla om kortet är ett actionkort
-					player.play(selection);
+					if (selection > (player.getHandSize())) {
+
+					} else {
+						player.play(selection);
+					}
 				} else if (selection == 3) {
 					phase = 2;
 				} else {
@@ -56,6 +62,7 @@ public class GameManager {
 			// Buyphase
 			while (phase == 3) {
 				buyCardPhaseSelection();
+				System.out.println("Your gold is " + player.getGold());
 				keyboard = new Scanner(System.in);
 				int selection = keyboard.nextInt();
 				if (selection == 1) {
@@ -95,15 +102,24 @@ public class GameManager {
 					} else {
 						System.out.println("Insufficient gold to buy that card");
 					}
+				} else if (selection == 5) {
+					phase = 4;
+				} else {
+					System.out.println("You can only input 1-5, dumbass!");
 				}
 			}
 			// Cleanupphase
-			while (phase == 3) {
-				phase = 1;
+			while (phase == 4) {
 				player.endRound();
+				if (gameState.checkGameEnd()) {
+					System.out.println("Game is over! Your points were = " + player.getVictoryPoints());
+				} else {
+					phase = 1;
+				}
 			}
 		}
 	}
+	
 	private void actionPhaseSelection() {
 		System.out.println("What would you like to do?");
 		System.out.println("#1 Show hand");

@@ -23,6 +23,12 @@ public class Player {
 		graveyard = new Stack<Card>();
 	}
 	
+	public void testing() {
+		startGame();
+		System.out.println(getVictoryPoints());
+	}
+	
+	
 	public void addAction(int actionsIncrease) {
 		actions = actionsIncrease + actions;
 	}
@@ -55,9 +61,13 @@ public class Player {
 		while (graveyard.isEmpty() == false) {
 			tempCardList.add(graveyard.pop());
 		}
-		for (int i = 0; i < tempCardList.size(); i++) {
+		while (deck.isEmpty() == false) {
+			tempCardList.add(deck.pop());
+		}
+		for (int i = tempCardList.size(); i > 0; i--) {
 			int random = rand.nextInt(tempCardList.size());
 			Card tempCard = tempCardList.get(random);
+			tempCardList.remove(random);
 			deck.push(tempCard);
 		}
 	}
@@ -77,6 +87,10 @@ public class Player {
 	
 	public int getGold() {
 		return gold;
+	}
+	
+	public int getHandSize() {
+		return hand.size();
 	}
 	
 	public void getHand() {
@@ -180,18 +194,15 @@ public class Player {
 		this.gameState = gameState;
 	}
 	
-	public void testing() {
-		startGame();
-	}
-	
+
 	public void startGame() {
 		for (int i = 0; i < 7; i++) {
-			Card tempCard = new CardCopper(this);
-			add(tempCard);
+			Card tempCopperCard = new CardCopper(this);
+			add(tempCopperCard);
 		}
 		for (int i = 0; i < 3; i++) {
-			Card tempCard = new CardEstate(this);
-			add(tempCard);
+			Card tempEstateCard = new CardEstate(this);
+			add(tempEstateCard);
 		}
 		while (hand.size() < 5) {
 			drawCard(1);
@@ -209,7 +220,7 @@ public class Player {
 		for (Card c : activeCards) {
 			graveyard.push(c);
 		}
-		while (hand.size() > 5) {
+		while (hand.size() < 5) {
 			drawCard(1);
 		}
 	}
@@ -219,5 +230,44 @@ public class Player {
 			graveyard.push(c);
 		}
 		hand.clear();
+	}
+
+	public int getVictoryPoints() {
+		ArrayList<Card> tempHand = (ArrayList<Card>) hand.clone();
+		ArrayList<Card> tempActiveCards = (ArrayList<Card>) activeCards.clone();
+		Stack<Card> tempGraveyard = (Stack<Card>) graveyard.clone();
+		Stack<Card> tempDeck = (Stack<Card>) deck.clone();
+		int victoryPoints = 0;
+		while (tempDeck.isEmpty() == false) {
+			Card tempCard = tempDeck.pop();
+			if (tempCard instanceof VictoryCard) {
+				VictoryCard vc = (VictoryCard) tempCard;
+				victoryPoints = victoryPoints += vc.getVictoryPoints();
+			}
+		}
+		while (tempGraveyard.isEmpty() == false) {
+			Card tempCard = tempGraveyard.pop();
+			if (tempCard instanceof VictoryCard) {
+				VictoryCard vc = (VictoryCard) tempCard;
+				victoryPoints = victoryPoints += vc.getVictoryPoints();
+			}
+		}
+		for (Card c : tempHand) {
+			Card tempCard = c;
+			if (tempCard instanceof VictoryCard) {
+				VictoryCard vc = (VictoryCard) tempCard;
+				victoryPoints = victoryPoints += vc.getVictoryPoints();
+			}
+
+		}
+		for (Card c : tempActiveCards) {
+			Card tempCard = c;
+			if (tempCard instanceof VictoryCard) {
+				VictoryCard vc = (VictoryCard) tempCard;
+				victoryPoints = victoryPoints += vc.getVictoryPoints();
+			}
+
+		}
+		return victoryPoints;
 	}
 }

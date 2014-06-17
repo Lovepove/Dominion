@@ -95,7 +95,7 @@ public class GameState {
 	}
 	
 	public Card getTreasureCard(int i) {
-		return victoryCardIndex[i - 1];
+		return treasureCardIndex[i - 1];
 	}
 	
 	public Card getVictoryCard(int i) {
@@ -156,6 +156,33 @@ public class GameState {
 		for (int j : cardHistogram) {
 			System.out.println("#" + (k + 1) + " " + victoryCardIndex[k].display() + " " + j);
 			k++;
+		}
+	}
+	
+	public boolean checkGameEnd() {
+		if (victoryCards.contains(new CardProvince(player)) == false) {
+			return true;
+		}
+		ArrayList<Card> endGameChecker = new ArrayList<Card>();
+		for (Card c : victoryCards) {
+			if (endGameChecker.contains(c) == false ) {
+				endGameChecker.add(c);
+			}
+		}
+		for (Card c : actionCards) {
+			if (endGameChecker.contains(c) == false ) {
+				endGameChecker.add(c);
+			}
+		}
+		for (Card c : treasureCards) {
+			if (endGameChecker.contains(c) == false ) {
+				endGameChecker.add(c);
+			}
+		}
+		if (endGameChecker.size() < 7) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

@@ -7,4 +7,8 @@ public class VictoryCard extends Card {
 		super(displayName, activePlayer);
 		this.activePlayer = activePlayer;
 	}
+	
+	public int getVictoryPoints() {
+		return 0;
+	}
 }
