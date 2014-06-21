@@ -22,25 +22,35 @@ public class GameManager {
 			// Actionphase
 			while (phase == 1) {
 				actionPhaseSelection();
+				System.out.println("#4 DEBUG Get Deck");
+				System.out.println("#5 DEBUG Get ActiveCards");
+				System.out.println("#6 DEBUG Get Graveyard");
 				keyboard = new Scanner(System.in);
 				int selection = keyboard.nextInt();
 				if (selection == 1) {
 					player.getHand();
 				} else if (selection == 2) {
 					player.getHand();
+					//TODO Fix the numbering on go back. It is acting strange
 					System.out.println("#" + (player.getHandSize() + 1) + " Go Back");
 					System.out.println("Which card would you like to play?");
 					selection = keyboard.nextInt();
 					//Måste kolla om kortet är ett actionkort
 					if (selection > (player.getHandSize())) {
-
+						//Go back
 					} else {
 						player.play(selection);
 					}
 				} else if (selection == 3) {
 					phase = 2;
+				} else if (selection == 4) {
+					player.getDeck();
+				} else if (selection == 5) {
+					player.getActiveCards();
+				} else if (selection == 6) {
+					player.getGraveyard();
 				} else {
-					System.out.println("You can only input 1 - 3, dumbass!");
+					System.out.println("You can only input 1 - 6, dumbass!");
 				}
 			}
 			// Playcoinphase
@@ -75,32 +85,59 @@ public class GameManager {
 				} else if (selection ==2) {
 					System.out.println("Which action card would you like to buy? Insert number");
 					gameState.getActionCards();
+					System.out.println("#5 Go Back");
 					selection = keyboard.nextInt();
-					boolean success = player.buyActionCard(selection);
-					if (success) {
-						System.out.println("You bought a card");
+					if (selection == 5) {
+						//Go back
 					} else {
-						System.out.println("Insufficient gold to buy that card");
+						if (selection < 5) {
+							boolean success = player.buyActionCard(selection);
+							if (success) {
+								System.out.println("You bought a card");
+							} else {
+								System.out.println("Insufficient gold to buy that card");
+							}								
+						} else {
+							System.out.println("You can only input 1 - 5, dumbass!");
+						}
 					}
 				} else if (selection == 3) {
 					System.out.println("Which treasure card would you like to buy? Insert number");
 					gameState.getTreasureCards();
+					System.out.println("#4 Go Back");
 					selection = keyboard.nextInt();
-					boolean success = player.buyTreasureCard(selection);
-					if (success) {
-						System.out.println("You bought a card");
+					if (selection == 4) {
+						//Go back
 					} else {
-						System.out.println("Insufficient gold to buy that card");
+						if (selection < 4){
+							boolean success = player.buyTreasureCard(selection);
+							if (success) {
+								System.out.println("You bought a card");
+							} else {
+								System.out.println("Insufficient gold to buy that card");
+							}				
+						} else {
+							System.out.println("You can only input 1 - 4, dumbass!");
+						}
 					}
 				} else if (selection == 4) {
 					System.out.println("Which victory card would you like to buy? Insert number");
 					gameState.getVictoryCards();
+					System.out.println("#4 Go back");
 					selection = keyboard.nextInt();
-					boolean success = player.buyVictoryCard(selection);
-					if (success) {
-						System.out.println("You bought a card");
+					if (selection == 4) {
+						
 					} else {
-						System.out.println("Insufficient gold to buy that card");
+						if (selection < 4) {
+							boolean success = player.buyVictoryCard(selection);
+							if (success) {
+								System.out.println("You bought a card");
+							} else {
+								System.out.println("Insufficient gold to buy that card");
+							}							
+						} else {
+							System.out.println("You can only input 1 - 4, dumbass!");
+						}	
 					}
 				} else if (selection == 5) {
 					phase = 4;
@@ -113,11 +150,14 @@ public class GameManager {
 				player.endRound();
 				if (gameState.checkGameEnd()) {
 					System.out.println("Game is over! Your points were = " + player.getVictoryPoints());
+					break;
 				} else {
 					phase = 1;
 				}
 			}
+			break;
 		}
+		System.out.println("Restart the program to play again");
 	}
 	
 	private void actionPhaseSelection() {

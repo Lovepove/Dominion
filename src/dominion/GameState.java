@@ -54,6 +54,9 @@ public class GameState {
 			VictoryCard vcard3 = new CardProvince(player);
 			victoryCards.add(vcard3);
 		}
+		victoryCards.remove(new CardProvince(player));
+		victoryCards.remove(new CardProvince(player));
+
 	}
 	
 	public void testing() {

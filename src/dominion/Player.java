@@ -1,6 +1,7 @@
 package dominion;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Stack;
 
@@ -102,6 +103,7 @@ public class Player {
 	}
 	
 	public void getDeck() {
+		System.out.println("Printing deck");
 		Stack<Card> tempDeck = (Stack<Card>) deck.clone();
 		while (tempDeck.isEmpty() == false) {
 			Card tempCard = (Card) tempDeck.pop();
@@ -110,8 +112,18 @@ public class Player {
 	}
 	
 	public void getActiveCards() {
+		System.out.println("Printing active cards");
 		for (Card c : activeCards) {
 			System.out.println(c.display());
+		}
+	}
+	
+	public void getGraveyard() {
+		System.out.println("Printing graveyard");
+		Stack<Card> tempDeck = (Stack<Card>) graveyard.clone();
+		while (tempDeck.isEmpty() == false) {
+			Card tempCard = (Card) tempDeck.pop();
+			System.out.println(tempCard.display());
 		}
 	}
 	
@@ -169,23 +181,29 @@ public class Player {
 	public void play(int i) {
 		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions > 0) {
 			ActionCard tempCard = (ActionCard) hand.get(i);
-			tempCard.play();
 			hand.remove(i);
+			tempCard.play();
 			activeCards.add(tempCard);
 			actions--;
 		} else if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
 			TreasureCard tempCard = (TreasureCard) hand.get(i);
-			tempCard.play();
 			hand.remove(i);
+			tempCard.play();
 			activeCards.add(tempCard);			
+		} else {
+			System.out.println("That card cannot be played");
 		}
 	}
 	
 	public void playAllTreasureCards() {
-		for (Card c : hand) {
+		Iterator<Card> itr = hand.iterator();
+		while (itr.hasNext()) {
+			Card c = itr.next();
 			if (TreasureCard.class.isAssignableFrom(c.getClass())) {
 				TreasureCard tc = (TreasureCard) c;
+				activeCards.add(tc);
 				tc.play();
+				itr.remove();
 			}
 		}
 	}
@@ -216,10 +234,11 @@ public class Player {
 	}
 	
 	public void endRound() {
-		discardHand();
 		for (Card c : activeCards) {
 			graveyard.push(c);
 		}
+		activeCards.clear();
+		discardHand();
 		while (hand.size() < 5) {
 			drawCard(1);
 		}
@@ -266,7 +285,6 @@ public class Player {
 				VictoryCard vc = (VictoryCard) tempCard;
 				victoryPoints = victoryPoints += vc.getVictoryPoints();
 			}
-
 		}
 		return victoryPoints;
 	}
