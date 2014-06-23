@@ -16,7 +16,7 @@ public class GameManager {
 	
 	public void startGame() {
 		player.startGame();
-		while (true) {
+		while (gameState.checkGameEnd() == false) {
 			phase = 1;
 			player.startRound();
 			// Actionphase
@@ -31,15 +31,18 @@ public class GameManager {
 					player.getHand();
 				} else if (selection == 2) {
 					player.getHand();
-					//TODO Fix the numbering on go back. It is acting strange
-					System.out.println("#" + (player.getHandSize() + 1) + " Go Back");
+					System.out.println("#" + (player.getHandSize()) + " Go Back");
 					System.out.println("Which card would you like to play?");
 					selection = keyboard.nextInt();
-					//Måste kolla om kortet är ett actionkort
 					if (selection > (player.getHandSize())) {
 						//Go back
 					} else {
-						player.play(selection);
+						boolean playedCard = player.play(selection, 1);
+						if (playedCard) {
+							System.out.println("You played your card");
+						} else {
+							System.out.println("You can't play that card");
+						}
 					}
 				} else if (selection == 3) {
 					phase = 2;
@@ -148,16 +151,11 @@ public class GameManager {
 			// Cleanupphase
 			while (phase == 4) {
 				player.endRound();
-				if (gameState.checkGameEnd()) {
-					System.out.println("Game is over! Your points were = " + player.getVictoryPoints());
-					break;
-				} else {
-					phase = 1;
-				}
+				phase = 1;
 			}
-			break;
 		}
-		System.out.println("Restart the program to play again");
+		System.out.println("Game is over! Your points were = " + player.getVictoryPoints());
+
 	}
 	
 	private void actionPhaseSelection() {

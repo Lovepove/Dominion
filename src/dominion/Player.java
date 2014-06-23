@@ -14,8 +14,9 @@ public class Player {
 	private int actions;
 	private int buys;
 	private int gold;
-	private int victoryPoints;
 	private GameState gameState;
+	
+//	private int victoryPoints;
 
 	public Player() {
 		hand = new ArrayList<Card>();
@@ -57,6 +58,7 @@ public class Player {
 	}
 	
 	public void shuffleDeck() {
+		//TODO Fix that it is impossible for a player to get 5 coins turn 1 or 2.
 		Random rand = new Random();
 		ArrayList<Card> tempCardList = new ArrayList<Card>();
 		while (graveyard.isEmpty() == false) {
@@ -75,15 +77,6 @@ public class Player {
 	
 	public void add(Card card) {
 		graveyard.push(card);	
-	}
-	
-	// Tror inte jag kommer behöva dessa men vi får se
-	public int getAction() {
-		return actions;
-	}
-	
-	public int getBuy() {
-		return buys;
 	}
 	
 	public int getGold() {
@@ -178,21 +171,30 @@ public class Player {
 		}
 	}
 
-	public void play(int i) {
-		if (ActionCard.class.isAssignableFrom(hand.get(i).getClass()) && actions > 0) {
-			ActionCard tempCard = (ActionCard) hand.get(i);
-			hand.remove(i);
-			tempCard.play();
-			activeCards.add(tempCard);
-			actions--;
-		} else if (TreasureCard.class.isAssignableFrom(hand.get(i).getClass())) {
-			TreasureCard tempCard = (TreasureCard) hand.get(i);
-			hand.remove(i);
-			tempCard.play();
-			activeCards.add(tempCard);			
-		} else {
-			System.out.println("That card cannot be played");
+	public boolean play(int cardNumber, int phase) {
+		if (phase == 1) {
+			if (ActionCard.class.isAssignableFrom(hand.get(cardNumber).getClass()) && actions > 0) {
+				ActionCard tempCard = (ActionCard) hand.get(cardNumber);
+				hand.remove(cardNumber);
+				tempCard.play();
+				activeCards.add(tempCard);
+				actions--;
+				return true;
+			} else {
+				return false;
+			}
+		} else if (phase == 2) {
+			if (TreasureCard.class.isAssignableFrom(hand.get(cardNumber).getClass())) {
+				TreasureCard tempCard = (TreasureCard) hand.get(cardNumber);
+				hand.remove(cardNumber);
+				tempCard.play();
+				activeCards.add(tempCard);
+				return true;
+			} else {
+				return false;
+			}
 		}
+		return false;
 	}
 	
 	public void playAllTreasureCards() {
@@ -211,7 +213,6 @@ public class Player {
 	public void setGameState(GameState gameState) {
 		this.gameState = gameState;
 	}
-	
 
 	public void startGame() {
 		for (int i = 0; i < 7; i++) {
