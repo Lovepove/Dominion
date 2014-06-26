@@ -15,6 +15,7 @@ public class Player {
 	private int buys;
 	private int gold;
 	private GameState gameState;
+
 	
 //	private int victoryPoints;
 
@@ -25,10 +26,9 @@ public class Player {
 		graveyard = new Stack<Card>();
 	}
 	
-	public void testing() {
-		startGame();
-		System.out.println(getVictoryPoints());
-	}
+//	public void testing() {
+//
+//	}
 	
 	
 	public void addAction(int actionsIncrease) {
@@ -58,7 +58,6 @@ public class Player {
 	}
 	
 	public void shuffleDeck() {
-		//TODO Fix that it is impossible for a player to get 5 coins turn 1 or 2.
 		Random rand = new Random();
 		ArrayList<Card> tempCardList = new ArrayList<Card>();
 		while (graveyard.isEmpty() == false) {
@@ -67,8 +66,9 @@ public class Player {
 		while (deck.isEmpty() == false) {
 			tempCardList.add(deck.pop());
 		}
+		int random;
 		for (int i = tempCardList.size(); i > 0; i--) {
-			int random = rand.nextInt(tempCardList.size());
+			random = rand.nextInt(tempCardList.size());
 			Card tempCard = tempCardList.get(random);
 			tempCardList.remove(random);
 			deck.push(tempCard);

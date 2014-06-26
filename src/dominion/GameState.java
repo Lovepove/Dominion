@@ -1,9 +1,6 @@
 package dominion;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-
 public class GameState {
 	private ArrayList<Card> actionCards;
 	private ArrayList<Card> victoryCards;

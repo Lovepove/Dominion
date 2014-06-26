@@ -2,8 +2,8 @@ package dominion;
 
 public class ActionCard extends Card {
 	
-	private String displayName;
-	private Player activePlayer;
+//	private String displayName;
+//	private Player activePlayer;
 
 	
 	public ActionCard(String displayName, Player activePlayer) {
