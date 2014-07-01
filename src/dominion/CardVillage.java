@@ -12,7 +12,7 @@ public class CardVillage extends ActionCard {
 
 	@Override
 	public void play() {
-		activePlayer.drawCard(1);
+		activePlayer.drawCard();
 		activePlayer.addAction(2);
 	}
 	

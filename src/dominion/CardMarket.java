@@ -12,7 +12,7 @@ public class CardMarket extends ActionCard {
 	}
 	
 	public void play() {
-		activePlayer.drawCard(1);
+		activePlayer.drawCard();
 		activePlayer.addAction(1);
 		activePlayer.addBuy(1);
 		activePlayer.addGold(1);

@@ -43,15 +43,14 @@ public class Player {
 		gold = goldIncrease + gold;
 	}
 	
-	public void drawCard(int cards) {
-		if (deck.size() == 0) {
+	public void drawCard() {
+		//TODO Change so that drawCard only draws one card.
+		if (deck.size() == 1) {
 			shuffleDeck();
 		}
-		if (deck.size() != 0) {
-			for (int i = 0; i < cards; i++) {
+		if (deck.size() > 0) {
 				Card drawnCard = deck.pop();
 				hand.add(drawnCard);
-			}
 		} else {
 			System.out.println("Leken är tom!");
 		}
@@ -224,7 +223,7 @@ public class Player {
 			add(tempEstateCard);
 		}
 		while (hand.size() < 5) {
-			drawCard(1);
+			drawCard();
 		}
 	}
 	
@@ -241,7 +240,7 @@ public class Player {
 		activeCards.clear();
 		discardHand();
 		while (hand.size() < 5) {
-			drawCard(1);
+			drawCard();
 		}
 	}
 	

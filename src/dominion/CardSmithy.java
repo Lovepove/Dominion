@@ -12,7 +12,9 @@ public class CardSmithy extends ActionCard {
 
 	@Override
 	public void play() {
-		activePlayer.drawCard(3);
+		activePlayer.drawCard();
+		activePlayer.drawCard();
+		activePlayer.drawCard();
 	}
 	
 	public String getName() {
